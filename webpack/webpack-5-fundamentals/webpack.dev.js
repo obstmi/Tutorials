@@ -1,25 +1,14 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common');
 
-module.exports = {
+module.exports = merge(common, {
   mode: 'development',
-  entry: './src/index.js',
   devtool: 'inline-source-map',
   devServer: {
     static: './dist'
   },
   module: {
     rules: [
-      {
-        test: /\.m?js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ['@babel/preset-env']
-          }
-        }
-      },
       {
         test: /\.scss$/i,
         use: [
@@ -30,13 +19,4 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Development'
-    }),
-  ],
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
-};
+});

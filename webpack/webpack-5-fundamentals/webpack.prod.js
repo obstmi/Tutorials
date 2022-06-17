@@ -1,25 +1,11 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  mode: 'development',
-  entry: './src/index.js',
-  devServer: {
-    static: './dist'
-  },
+  mode: 'production',
   module: {
     rules: [
-      {
-        test: /\.m?js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ['@babel/preset-env']
-          }
-        }
-      },
       {
         test: /\.scss$/i,
         use: [
@@ -35,15 +21,8 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Development'
-    }),
     new MiniCssExtractPlugin({
       filename: '[name].css'
     })
   ],
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
 };
